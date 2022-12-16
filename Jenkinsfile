@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters {
-  gitParameter branch: '', branchFilter: '.*', defaultValue: '', description: 'branch', name: 'BRANCH', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', type: 'GitParameterDefinition'
+  gitParameter branch: '', branchFilter: 'origin/(.*)', defaultValue: '', description: 'branch', name: 'BRANCH', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', type: 'GitParameterDefinition'
 }
 
 tools {
