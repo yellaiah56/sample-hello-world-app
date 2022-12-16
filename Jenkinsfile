@@ -24,8 +24,8 @@ options {
         stage('build image'){
              when {
          expression{
-              return env.GIT_BRANCH == "origin/prod"
-           //return "${BranchName}" == "origin/prod"
+              //return env.GIT_BRANCH == "origin/prod"
+           return "${BranchName}" == "origin/prod"
                    }
             }
         
