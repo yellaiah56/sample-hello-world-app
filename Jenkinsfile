@@ -74,10 +74,9 @@ options {
           return "${BranchName}" == "origin/prod"
                    }
             } 
-            */
             input {
-  message 'Do you want to deploy to production ?'
-}
+             message 'Do you want to deploy to production ?'
+                }
 
             steps{
                 sh "docker run -d --name webapp -p 9090:8080 yellaiah56/helloworld:${env.BUILD_NUMBER}"
