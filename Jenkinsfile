@@ -43,7 +43,12 @@ options {
         }
         
         stage('push image'){
-            
+             when {
+         expression{
+              //return env.GIT_BRANCH == "origin/prod"
+           return "${BranchName}" == "origin/prod"
+                   }
+            }
            
             steps{
                 
@@ -51,12 +56,18 @@ options {
 }
             }
         stage("container cleanup"){
+             when {
+         expression{
+              //return env.GIT_BRANCH == "origin/prod"
+           return "${BranchName}" == "origin/prod"
+                   }
+            }
             steps{
                 sh "docker rm -f webapp || true"
             }
         }
         stage('deploy container'){
-           /* 
+            
             when {
          expression{
           //  return env.GIT_BRANCH == "origin/prod"
