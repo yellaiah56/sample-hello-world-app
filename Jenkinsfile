@@ -24,8 +24,8 @@ options {
         stage('build image'){
              when {
          expression{
-              //return env.GIT_BRANCH == "origin/prod"
-           return "${BranchName}" == "origin/prod"
+             return env.GIT_BRANCH == "origin/prod"
+           //return "${BranchName}" == "origin/prod"
                    }
             }
         
@@ -45,8 +45,8 @@ options {
         stage('push image'){
              when {
          expression{
-              //return env.GIT_BRANCH == "origin/prod"
-           return "${BranchName}" == "origin/prod"
+              return env.GIT_BRANCH == "origin/prod"
+           //return "${BranchName}" == "origin/prod"
                    }
             }
            
@@ -58,8 +58,8 @@ options {
         stage("container cleanup"){
              when {
          expression{
-              //return env.GIT_BRANCH == "origin/prod"
-           return "${BranchName}" == "origin/prod"
+              return env.GIT_BRANCH == "origin/prod"
+           //return "${BranchName}" == "origin/prod"
                    }
             }
             steps{
@@ -70,8 +70,8 @@ options {
             
             when {
          expression{
-          //  return env.GIT_BRANCH == "origin/prod"
-          return "${BranchName}" == "origin/prod"
+           return env.GIT_BRANCH == "origin/prod"
+          //return "${BranchName}" == "origin/prod"
                    }
             }
             
