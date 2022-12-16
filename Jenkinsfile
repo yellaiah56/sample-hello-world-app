@@ -13,7 +13,7 @@ options {
     stages {
         stage('checkout code') {
             steps {
-                git branch: '${BranchName}', credentialsId: 'GitHub', url: 'https://github.com/yellaiah56/sample-hello-world-app.git'
+                git branch: '${env.GIT_BRANCH}', credentialsId: 'GitHub', url: 'https://github.com/yellaiah56/sample-hello-world-app.git'
             }
         }
         stage('code build'){
