@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    parameters {
+  gitParameter branch: '', branchFilter: '.*', defaultValue: '', description: 'branch', name: 'BRANCH', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', type: 'GitParameterDefinition'
+}
+
 tools {
   maven 'maven3.8.6'
 }
@@ -13,7 +17,7 @@ options {
     stages {
         stage('checkout code') {
             steps {
-                git branch: "${params.BranchName}", credentialsId: 'GitHub', url: 'https://github.com/yellaiah56/sample-hello-world-app.git'
+                git branch: "${params.BRANCH}", credentialsId: 'GitHub', url: 'https://github.com/yellaiah56/sample-hello-world-app.git'
             }
         }
         stage('code build'){
