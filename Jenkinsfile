@@ -1,9 +1,8 @@
 pipeline {
     agent any
-    parameters {
-  gitParameter branch: '', branchFilter: 'origin/(.*)', defaultValue: '', description: 'branch', name: 'BRANCH', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', type: 'GitParameterDefinition'
+ parameters {
+  gitParameter branch: '', branchFilter: 'origin/(.*)', defaultValue: 'master', description: 'branch', name: 'BRANCH', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', type: 'GitParameterDefinition'
 }
-
 tools {
   maven 'maven3.8.6'
 }
