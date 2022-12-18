@@ -4,6 +4,7 @@ pipeline {
   gitParameter branch: '', branchFilter: 'origin/(.*)', defaultValue: 'master', description: 'branch', name: 'BRANCH', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', type: 'GitParameterDefinition'
 }
 */
+
 tools {
   maven 'maven3.8.6'
 }
@@ -18,6 +19,7 @@ options {
         stage('checkout code') {
             steps {
                 git branch: "${params.branchname}", credentialsId: 'GitHub', url: 'https://github.com/yellaiah56/sample-hello-world-app.git'
+
             }
         }
         stage('code build'){
@@ -29,6 +31,7 @@ options {
              when {
          expression{
              return env.GIT_BRANCH == "origin/prod"
+
            //return "${BranchName}" == "origin/prod"
                    }
             }
