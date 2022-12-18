@@ -18,7 +18,7 @@ options {
     stages {
         stage('checkout code') {
             steps {
-                git branch: "${params.branchname}", credentialsId: 'GitHub', url: 'https://github.com/yellaiah56/sample-hello-world-app.git'
+                git branch: "${branchname}", credentialsId: 'GitHub', url: 'https://github.com/yellaiah56/sample-hello-world-app.git'
 
             }
         }
