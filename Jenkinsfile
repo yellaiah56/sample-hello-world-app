@@ -1,8 +1,9 @@
 pipeline {
     agent any
-    parameters {
-  gitParameter branch: '', branchFilter: '.*', defaultValue: '', description: 'branch', name: 'BRANCH', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', type: 'GitParameterDefinition'
+ /*parameters {
+  gitParameter branch: '', branchFilter: 'origin/(.*)', defaultValue: 'master', description: 'branch', name: 'BRANCH', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', type: 'GitParameterDefinition'
 }
+*/
 
 tools {
   maven 'maven3.8.6'
@@ -17,7 +18,8 @@ options {
     stages {
         stage('checkout code') {
             steps {
-                git branch: "${params.BRANCH}", credentialsId: 'GitHub', url: 'https://github.com/yellaiah56/sample-hello-world-app.git'
+                git branch: "${branchname}", credentialsId: 'GitHub', url: 'https://github.com/yellaiah56/sample-hello-world-app.git'
+
             }
         }
         stage('code build'){
@@ -28,7 +30,8 @@ options {
         stage('build image'){
              when {
          expression{
-              return env.GIT_BRANCH == "origin/prod"
+             return env.GIT_BRANCH == "origin/prod"
+
            //return "${BranchName}" == "origin/prod"
                    }
             }
@@ -40,8 +43,9 @@ options {
         }
         stage('docker login'){
             steps{
-                 withCredentials([string(credentialsId: 'dockerhub_pwd', variable: 'password')]){
-                sh "docker login -u yellaiah56 -p ${password}"
+                // withCredentials([string(credentialsId: 'dockerhub_pwd', variable: 'password')]){
+               // sh "docker login -u yellaiah56 -p ${password}"
+                sh "docker login -u yellaiah56 -p Yellaiah@1211"
             }
             }
         }
@@ -62,7 +66,7 @@ options {
         stage("container cleanup"){
              when {
          expression{
-             return env.GIT_BRANCH == "origin/prod"
+              return env.GIT_BRANCH == "origin/prod"
            //return "${BranchName}" == "origin/prod"
                    }
             }
@@ -77,11 +81,8 @@ options {
            return env.GIT_BRANCH == "origin/prod"
           //return "${BranchName}" == "origin/prod"
                    }
-            } 
-            input {
-             message 'Do you want to deploy to production ?'
-                }
-
+            }
+            
             steps{
                 sh "docker run -d --name webapp -p 9090:8080 yellaiah56/helloworld:${env.BUILD_NUMBER}"
             }
