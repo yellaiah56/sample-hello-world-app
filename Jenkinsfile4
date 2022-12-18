@@ -1,0 +1,65 @@
+pipeline {
+  agent any
+  tools{
+      maven "maven3.8.6"
+  }
+  options {
+  buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5')
+  timestamps()
+}
+
+  parameters {
+    gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
+  }
+  stages {
+    stage('Example') {
+      steps {
+        git branch: "${params.BRANCH}", url: 'https://github.com/yellaiah56/sample-hello-world-app.git'
+      }
+    }
+    stage('build'){
+        steps{
+            sh 'mvn clean package'
+        }
+    }
+    stage('clean image'){
+        steps{
+          sh 'docker image prune -af'
+        }
+    }
+    stage('build image'){
+        /* when {
+         expression{
+            return env.GIT_BRANCH == "origin/prod"
+                   }
+            } 
+            */
+        steps{
+        sh 'docker build -t yellaiah56/sample1:${BUILD_NUMBER} .'
+    }
+    }
+    stage('clean up container'){
+        steps{
+            sh 'docker rm -f javaapp || true'
+        }
+    }
+    stage('deploy'){
+       when {
+         expression {
+            return "${params.BRANCH}" == "prod"
+                   }
+            } 
+            
+            input {
+                message 'Do you want to deploy to production ?'
+                ok "Yes, we should."
+                submitter "YELLAIAH"
+                }
+
+        steps{
+            sh 'docker run -d --name javaapp -p 9091:8080 yellaiah56/sample1:${BUILD_NUMBER}'
+            sh 'docker ps'
+}
+    }
+  }//stage end
+}//pipeline end
