@@ -14,7 +14,7 @@ pipeline {
   stages {
     stage('Example') {
       steps {
-        git branch: "${BRANCH}", url: 'https://github.com/yellaiah56/sample-hello-world-app.git'
+        git branch: "${params.BRANCH}", url: 'https://github.com/yellaiah56/sample-hello-world-app.git'
       }
     }
     stage('build'){
