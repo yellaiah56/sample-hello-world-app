@@ -1,8 +1,9 @@
 pipeline {
     agent any
- parameters {
+ /*parameters {
   gitParameter branch: '', branchFilter: 'origin/(.*)', defaultValue: 'master', description: 'branch', name: 'BRANCH', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', type: 'GitParameterDefinition'
 }
+*/
 tools {
   maven 'maven3.8.6'
 }
@@ -16,7 +17,7 @@ options {
     stages {
         stage('checkout code') {
             steps {
-                git branch: "${params.BRANCH}", credentialsId: 'GitHub', url: 'https://github.com/yellaiah56/sample-hello-world-app.git'
+                git branch: "${params.branchname}", credentialsId: 'GitHub', url: 'https://github.com/yellaiah56/sample-hello-world-app.git'
             }
         }
         stage('code build'){
@@ -39,8 +40,9 @@ options {
         }
         stage('docker login'){
             steps{
-                 withCredentials([string(credentialsId: 'dockerhub_pwd', variable: 'password')]){
-                sh "docker login -u yellaiah56 -p ${password}"
+                // withCredentials([string(credentialsId: 'dockerhub_pwd', variable: 'password')]){
+               // sh "docker login -u yellaiah56 -p ${password}"
+                sh "docker login -u yellaiah56 -p Yellaiah@1211"
             }
             }
         }
