@@ -1,0 +1,26 @@
+pipeline {
+  agent any
+  tools{
+      maven "maven3.8.6"
+  }
+  parameters {
+    gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
+  }
+  stages {
+    stage('Example') {
+      steps {
+        git branch: "${params.BRANCH}", url: 'https://github.com/yellaiah56/sample-hello-world-app.git'
+      }
+    }
+    stage('build'){
+        steps{
+            sh 'mvn clean package'
+        }
+    }
+    stage('build image'){
+        steps{
+        sh 'docker build -t yellaiah56/sample1:${BUILD_NUMBER} .'
+    }
+    }
+  }//stage end
+}//pipeline end
